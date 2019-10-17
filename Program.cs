@@ -8,7 +8,24 @@ namespace HeistII
     static void Main(string[] args)
     {
       Console.Clear();
-      Console.WriteLine("THE HEIST -- PART II");
+      Console.WriteLine("....:::: THE HEIST -- PART II ::::....");
+      Console.WriteLine("......................................");
+      Console.WriteLine();
+      Console.WriteLine("Assemble a team, recon a bank, and grab the loot!");
+      Console.WriteLine();
+
+      bool beginHeist = false;
+      while (!beginHeist)
+      {
+        Console.Write("Press 'Enter' to continue >>");
+        string beginInput = Console.ReadLine();
+        if (beginInput == "")
+        {
+          beginHeist = true;
+          break;
+        }
+        break;
+      }
 
       // Instantiate a bunch of robbers
       Hacker specs = new Hacker("Specs", 30, 15);
@@ -33,11 +50,16 @@ namespace HeistII
       int newOperativeSkillLevel = 0;
       int newOperativePercentageCut = 0;
 
+
+
       // Add new operative
       while (isAddingOperative)
       {
-        Console.WriteLine($"There are {rolodex.Count} operatives in your Rolodex.");
-        rolodex.ForEach(Console.WriteLine);
+        Console.Clear();
+        Console.WriteLine($"You have {rolodex.Count} operatives in your Rolodex:");
+        Console.WriteLine("---------------------------------------");
+        rolodex.ForEach(operative => Console.WriteLine($" - {operative}"));
+        Console.WriteLine();
 
         // Enter Name
         Console.Write("Enter name of new operative or press 'enter' to skip >> ");
@@ -52,7 +74,7 @@ namespace HeistII
         {
           newOperativeName = nameInput;
         }
-
+        Console.Clear();
         // Choose Specialty
         Console.WriteLine($"Choose a Specialty for {nameInput}:");
         Console.WriteLine("[1] Hacker");
@@ -68,7 +90,7 @@ namespace HeistII
           bool success = int.TryParse(Console.ReadLine(), out specialtyInput);
           if (!success)
           {
-            Console.Write("Please enter a number, silly >> ");
+            Console.Write("Please enter a NUMBER, jackass >> ");
           }
           else
           {
@@ -98,10 +120,11 @@ namespace HeistII
           }
         }
 
-        Console.WriteLine();
+        Console.Clear();
 
         // Enter Skill Level
-        Console.Write($"Enter {newOperativeSpecialty} specialty level (from 1 to 100) >> ");
+        Console.WriteLine($"Enter {newOperativeName}'s {newOperativeSpecialty} skill level.");
+        Console.Write($"  1 - 100 >> ");
 
         bool isSelectingSkill = true;
         while (isSelectingSkill == true)
@@ -121,9 +144,10 @@ namespace HeistII
           }
         }
 
-
+        Console.Clear();
         // Enter Percentage Cut
-        Console.Write($"Enter {newOperativeName}'s percentage cut of the loot (from 1 to 100) >> ");
+        Console.WriteLine($"Enter {newOperativeName}'s percentage cut of the loot.");
+        Console.Write($"  1 - 100 >> ");
 
         bool isSelectingPercentageCut = true;
         while (isSelectingPercentageCut == true)
@@ -139,6 +163,7 @@ namespace HeistII
           else
           {
             newOperativePercentageCut = percentInput;
+            Console.Clear();
             break;
           }
         }
@@ -163,11 +188,46 @@ namespace HeistII
       }
       Console.Clear();
       Console.WriteLine("Finished Adding Operatives.");
-      Bank testBank = new Bank();
-      ReconReport test1 = new ReconReport();
-      test1.RunReport(testBank);
+      Console.WriteLine();
 
-      Console.WriteLine("Hooray!");
+      Console.Write("Enter name of bank to rob to do recon >> ");
+      string bankName = Console.ReadLine();
+
+      Console.Clear();
+
+      Bank bank = new Bank(bankName);
+      ReconReport test1 = new ReconReport();
+      test1.RunReport(bank);
+      Console.WriteLine("-----------------------------------------");
+      Console.WriteLine();
+      Console.WriteLine("Let's Build Your Crew");
+      bool readyToReadRolodex = false;
+      while (readyToReadRolodex == false)
+      {
+        Console.Write("Type 'R' to read your Rolodex >> ");
+        string readRolodexInput = Console.ReadLine();
+
+        if (readRolodexInput == "R")
+        {
+          readyToReadRolodex = true;
+          break;
+        }
+        else
+        {
+          Console.Clear();
+          Console.WriteLine("!! Invalid Response !!");
+        }
+
+      }
+
+      Console.Clear();
+      Console.WriteLine("------- AVAILABLE OPERATIVES -------");
+      Console.WriteLine("------------------------------------");
+      rolodex.ForEach(operative => Console.WriteLine($"[{rolodex.IndexOf(operative)}] {operative}"));
+
+      Console.WriteLine("------------------------------------");
+      Console.Write("Enter Operative Number and hit 'Enter' >> ");
+
     }
   }
 }

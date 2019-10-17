@@ -4,14 +4,17 @@ namespace HeistII
 {
   public class Bank
   {
-    public Bank()
+    public Bank(string name)
     {
+      Name = name;
       Random rnd = new Random();
       CashOnHand = rnd.Next(50_000, 1_000_000);
       AlarmScore = rnd.Next(0, 100);
       VaultScore = rnd.Next(0, 100);
       SecurityGuardScore = rnd.Next(0, 100);
     }
+
+    public string Name { get; set; }
     public int CashOnHand { get; set; }
     public int AlarmScore { get; set; }
     public int VaultScore { get; set; }
